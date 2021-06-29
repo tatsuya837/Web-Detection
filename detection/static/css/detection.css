@@ -1,0 +1,140 @@
+h1 a {
+    color:black;
+    font-family: 'Haettenschweiler';
+    text-decoration: none;
+}
+
+h2 a {
+    text-decoration: none;
+}
+
+.page-header {
+    background-color: khaki;
+    margin-top: 0;
+    /* font-size: 16pt; */
+    padding: 5px;
+    text-align: center;
+}
+
+/* .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: black;
+} */
+
+.container {
+    margin-top: 20px;
+    margin-left: 30px;
+    font-family: 'GlimChe';
+}
+
+/* h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+} */
+
+.date {
+    color: #828282;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    float: right;
+    font-size: 24pt;
+    margin-right: 20px;
+}
+
+input[type="text"] {
+    width: 30%;
+    border: none;
+    outline: none;
+    /* padding: 10px 0; */
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #aaa;
+}
+
+input[type="submit"] {
+    padding: 3px 10px;
+    border: 1px solid #aaa;
+    outline: none;
+    color: black;
+    background-color: lightgray;
+}
+
+input[type="submit"]:hover {
+    color: #fff;
+    background-color: #aaa;
+    cursor: pointer;
+}
+  
+.btn {
+    padding: 4px 8px;
+    width: 90px;
+    /* border: 1px solid #aaa; */
+    /* outline: none; */
+    /* color: black;
+    background-color: lightgray; */
+}
+
+#model_name {
+    font-size: 14px;
+}
+
+#btn_load {
+    margin: 0px 10px;
+}
+
+progress {
+    width: 200px;
+    height: 25px;
+    margin: 0px 20px;
+}
+
+.bg-info {
+    margin: 0px 20px;
+}
+
+#in_search {
+    margin: 0px 20px;
+}
+
+#result {
+    width: 100%;
+    margin: auto;
+    /* padding: 10px; */
+}
+  
+#result img:hover {
+    opacity: 0.5;
+}
+
+#img_select {
+    margin: 0px 20px;
+}
+
+#img_obj {
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    padding: 10px;
+}
+
+#btn_dect {
+    margin: 0px 0px 10px 0px;
+}
+
+#dect_img {
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    padding: 10px;
+}
+
+#ajax_dect {
+    margin: 20px 0px 0px 0px;
+}

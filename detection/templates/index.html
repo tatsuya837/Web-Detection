@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <script src="static/js/jquery-3.6.0.js"></script>
+
+    <div class="alert alert-success">
+    画像から物体検出(object detection)を行います。<br>
+    【Load】ボタンにてモデルをロード後、画像を選択し、【Detection】ボタンを押して下さい。
+    </div>
+
+    <form id="ajax_load" name="load">
+
+        <!-- <select id="model_name" class="custom-select"> -->
+        <select id="model_name" class="custom-select">
+            <!-- <option selected>SSD ResNet152 V1 FPN 1024x1024 (RetinaNet152)</option> -->
+            <option>SSD ResNet152 V1 FPN 1024x1024 (RetinaNet152)</option>
+            <option>CenterNet HourGlass104 Keypoints 1024x1024</option>
+            <option>EfficientDet D7 1536x1536</option>
+            <option>Mask R-CNN Inception ResNet V2 1024x1024</option>
+        </select>
+
+        <button name="btn" id="btn_load" type="submit" class="btn btn-primary">Load</button><BR>
+
+        <span id="result_load" class="bg-dark text-white" >☝最初にModelを選択後、Loadして下さい</span>
+        <progress id="time_load" max="180" value="0"></progress>
+
+    </form>
+
+    <span class="bg-info text-white" >↓インターネットの画像を使用する場合</span>
+
+    <form name="search">
+        <input id="in_search" name="key" type="text" placeholder="何を探してる？">
+        <button name="btn" type="submit" class="btn btn-secondary">Seach</button>
+    </form>
+
+    <div id="result"></div>
+    <BR>
+    <span class="bg-info text-white" >↓ローカルフォルダの画像を使用する場合</span><BR>
+    
+    <input type= 'file' id="img_select" name="img_select" accept=".png,.jpeg,.jpg" onchange="previewImage(this);">
+
+    <!-- <form id="upload" action="/upload" method="post" enctype="multipart/form-data"> -->
+        <!-- <input type= 'file' id="img_select" name="img_select" accept=".png,.jpeg,.jpg"> -->
+        <!-- <button name="btn" type="submit" class="btn btn-secondary">Upload</button> -->
+    <!-- </form> -->
+    
+    <form id="ajax_dect" action="/detection" method="post" target="_blank" enctype="multipart/form-data">
+        <button  name="btn" id="btn_dect" type="submit" class="btn btn-primary">Detection</button>
+        URL: <input type= 'text' id="img_url" name="img_url">
+    </form>
+
+    <span id="result_dect" class="bg-dark text-white" >☝画像選択後にDetection</span><BR>
+
+    <img id="img_obj" name="img_obj">
+
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $('#ajax_load').submit(function(event) {
+            event.preventDefault();
+            $('#result_load').text('モデルロード中...(2～3分待って下さい）');
+            // Ajax通信を開始
+            $.ajax({
+                url: "/load",
+                method: "POST",
+                dataType: 'text',
+                data:{ model_name : $('#model_name option:selected').text()}
+            })
+            .done(function(data) {
+                // 通信成功時の処理を記述
+                $('#result_load').text('ロード完了');
+                alert("ロード完了");
+            })
+            .fail(function() {
+                // 通信失敗時の処理を記述
+                $('#result_load').text('ロード失敗');
+                alert("ロード失敗");
+            });
+        });
+
+        // $('#img_select').on('change',function(event) {
+        //     event.preventDefault();
+        //     // Ajax通信を開始
+        //     var wDir = document.getElementById("img_select").value;
+        //     // document.getElementById("selectFileSample3").value = wDir;
+        //     // var wDir = $('#img_select').value;
+        //     alert(wDir);
+        //     $('#img_url').text(wDir);
+        // });
+
+        // ------------------------------------------------------------
+        // 画像選択時の処理
+        // ------------------------------------------------------------
+        function previewImage(obj)
+        {
+            var fileReader = new FileReader();
+            fileReader.onload = (function() {
+                document.getElementById('img_obj').src = fileReader.result;
+                document.getElementById('img_url').value = fileReader.result;
+            });
+            fileReader.readAsDataURL(obj.files[0]);
+        }
+
+    </script>
+    <script src="static/js/detection.js"></script>
+
+{% endblock %}
