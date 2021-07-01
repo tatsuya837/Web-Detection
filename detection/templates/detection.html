@@ -49,12 +49,22 @@
                 'offsetX': event.offsetX,
                 'offsetY': event.offsetY,
             },
-            // timeout: 10000,
-            dataType: 'json',
+            dataType: 'text',
         })
-        .done(function() {
+        .done(function(data) {
+            // alert("クリック成功");
             // 通信成功時の処理を記述
-            // alert("クリック完了");
+            if (data != '') {
+                var ssu = new SpeechSynthesisUtterance();
+                // 言語 (日本語:ja-JP, アメリカ英語:en-US, イギリス英語:en-GB, 中国語:zh-CN, 韓国語:ko-KR)
+                ssu.lang = 'en-US';
+                // 速度 0.1-10 初期値:1 (倍速なら2, 半分の倍速なら0.5)
+                ssu.rate = 0.5;
+                // 高さ 0-2 初期値:1
+                // ssu.pitch = 0.5;
+                ssu.text = data;
+                speechSynthesis.speak(ssu);
+            }
         })
         .fail(function() {
             // 通信失敗時の処理を記述

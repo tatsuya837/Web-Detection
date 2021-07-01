@@ -6,8 +6,8 @@ import base64
 import os
 
 from io import BytesIO
-from gtts import gTTS
-from playsound import playsound
+# from gtts import gTTS
+# from playsound import playsound
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -88,9 +88,6 @@ def detection():
 @app.route('/detection/img', methods=['POST'])
 def ajax_img():
 
-    # woffsetX = int(request.POST.get('offsetX'))
-    # woffsetY = int(request.POST.get('offsetY'))
-
     woffsetX = int(request.form['offsetX'])
     woffsetY = int(request.form['offsetY'])
 
@@ -105,10 +102,10 @@ def ajax_img():
 
     if wobj != '':
         print(wobj)
-        wtts = gTTS(text=wobj, lang="en", slow=True)
-        wtts.save("object.mp3")
-        playsound("object.mp3")
-        os.remove("object.mp3")
+        # wtts = gTTS(text=wobj, lang="en", slow=True)
+        # wtts.save("object.mp3")
+        # playsound("object.mp3")
+        # os.remove("object.mp3")
 
     return wobj
 
